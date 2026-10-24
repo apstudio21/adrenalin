@@ -10,7 +10,7 @@
 import os, sys, urllib.parse, urllib.request
 from PIL import Image
 
-BASE = "https://www.adrenalin-dragobrat.com.ua/wp-content/uploads/"
+BASE = "https://adrenalin-dragobrat.com.ua/wp-content/uploads/"
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAW = os.path.join(HERE, "originals")
 OUT = os.path.join(HERE, "..", "assets", "img")
@@ -18,9 +18,12 @@ OUT = os.path.join(HERE, "..", "assets", "img")
 # назва на сайті  ->  шлях оригіналу
 MAP = {
     "hero-night": "2026/10/Засніжений-готель-Адреналін-вночі.png",
-    "room-standart": "2026/10/Светлый-номер-с-тремя-кроватями.png",
-    "room-pivluks-1": "2026/10/Світла-затишна-спальня-з-балконом.png",
-    "room-pivluks-2": "2026/10/Затишкий-двомісний-номер-із-квітковим-декором.png",
+    "room-standart": "2026/10/Светлая-гостиничная-спальня-с-тремя-кроватями-1.png",
+    "room-pivluks-1": "2026/10/Уютная-спальня-с-балконом-и-лесным-видом.png",
+    "room-pivluks-2": "2026/10/Світлий-затишний-номер-із-видом-на-пагорби.png",
+    "svc-sauna": "2026/04/photo-55-scaled.jpg",
+    "svc-tennis": "2026/04/382original1601665493.jpg",
+    "svc-salt": "2026/04/photo-28-scaled.jpg",
     "room-luks": "2026/10/Уютный-гостиничный-номер-в-тёплом-свете.png",
     "svc-fireplace": "2026/04/depositphotos_22452055-stock-photo-fire-in-a-fireplace-fire.webp",
     "svc-ski": "2026/04/prokat-lyzh-girskyh.jpg",
