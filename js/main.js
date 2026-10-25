@@ -154,11 +154,11 @@
       a: 0.25 + z * 0.6, ph: Math.random() * Math.PI * 2, sp: 0.004 + Math.random() * 0.01 };
   };
   const sizeSnow = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2);
+    dpr = 1; // flakes are soft dots — 1x canvas keeps every frame cheap on Retina screens
     W = innerWidth; H = innerHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const n = Math.round(Math.min(140, W * H / 11000));
+    const n = Math.round(Math.min(110, W * H / 13000));
     flakes = Array.from({ length: n }, () => mkFlake(true));
   };
   let wind = 0, windT = 0;
@@ -233,22 +233,7 @@
   /* ------------------------------------------------------------------
      Parallax
   ------------------------------------------------------------------ */
-  const px = $$('[data-parallax]');
-  if (!reduce && px.length) {
-    let ticking = false;
-    const run = () => {
-      px.forEach(el => {
-        const r = el.parentElement.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > innerHeight) return;
-        const k = +el.dataset.parallax;
-        const off = (r.top + r.height / 2 - innerHeight / 2) * -k;
-        el.style.transform = `translate3d(0,${off.toFixed(1)}px,0)`;
-      });
-      ticking = false;
-    };
-    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(run); } }, { passive: true });
-    run();
-  }
+  // Parallax lives in CSS (scroll-driven animations) so it runs on the compositor
 
   /* ------------------------------------------------------------------
      Services tabs
@@ -449,17 +434,21 @@
   $$('[data-send]').forEach(b => b.addEventListener('click', async () => {
     if (!validate()) { errBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
     const msg = buildMessage();
-    const copied = await copy(msg);
     const num = BOOKING_PHONE.replace('+', '');
+    // the clipboard write starts inside the click; the app is opened right away too,
+    // before any await — otherwise Safari treats the new window as a blocked pop-up
+    const copying = copy(msg);
     if (b.dataset.send === 'viber') {
       // Viber підставляє текст у поле повідомлення (draft) — на телефоні працює одразу
       location.href = `viber://chat?number=%2B${num}&draft=${encodeURIComponent(msg)}`;
-      toast(copied ? 'Відкриваємо Viber… Текст також скопійовано — якщо поле порожнє, просто вставте його' : 'Відкриваємо Viber…', 6000);
     } else {
       // Telegram не дозволяє підставити текст у чат за номером — тому текст копіюється в буфер
       window.open(`https://t.me/+${num}`, '_blank', 'noopener');
-      toast(copied ? 'Текст заявки скопійовано — вставте його в чат Telegram і надішліть' : 'Відкриваємо Telegram…', 7000);
     }
+    const copied = await copying;
+    toast(b.dataset.send === 'viber'
+      ? (copied ? 'Відкриваємо Viber… Текст також скопійовано — якщо поле порожнє, просто вставте його' : 'Відкриваємо Viber…')
+      : (copied ? 'Текст заявки скопійовано — вставте його в чат Telegram і надішліть' : 'Відкриваємо Telegram…'), 7000);
   }));
   updateSummary();
 
@@ -493,6 +482,7 @@
     $$('.pin', map).forEach(p => p.addEventListener('click', e => { e.stopPropagation(); active === p ? close() : open(p); }));
     $('.pop__close', pop).addEventListener('click', close);
     canvasEl.addEventListener('click', close);
+    document.addEventListener('click', e => { if (active && !pop.contains(e.target) && !e.target.closest('.pin')) close(); });
     addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
     // drag to pan (on narrow screens the panorama is wider than the viewport)
     let down = false, sx = 0, sl = 0, moved = false;
