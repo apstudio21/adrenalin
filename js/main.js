@@ -110,10 +110,11 @@
   const navLinks = $$('.nav__links a[href^="#"]');
   const secObs = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
-    const id = '#' + e.target.id;
+    const id = e.target.classList.contains('hero') ? '#top' : '#' + e.target.id;
     navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === id));
   }), { rootMargin: '-45% 0px -50% 0px' });
-  ['top', 'rooms', 'reviews', 'gallery', 'dragobrat', 'contacts'].forEach(id => { const el = document.getElementById(id); el && secObs.observe(el); });
+  ['rooms', 'reviews', 'gallery', 'dragobrat', 'contacts'].forEach(id => { const el = document.getElementById(id); el && secObs.observe(el); });
+  const heroEl = $('.hero'); if (heroEl) { heroEl.id = heroEl.id || 'hero'; secObs.observe(heroEl); }
 
   /* "Coming soon" pages */
   $$('[data-soon]').forEach(a => a.addEventListener('click', e => {
