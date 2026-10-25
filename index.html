@@ -12,7 +12,7 @@
 <meta property="og:description" content="Ваш незабутній відпочинок у Карпатах. 70 номерів, ресторан, SPA, вид на Говерлу.">
 <meta property="og:image" content="assets/img/hero-night.webp">
 <link rel="preload" href="assets/fonts/montserrat.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="assets/fonts/cormorant-italic.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="assets/fonts/playfair-italic.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/fonts/manrope.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="assets/img/hero-night.webp" as="image">
 <link rel="stylesheet" href="css/styles.css">
@@ -78,6 +78,7 @@
     </a>
     <nav class="nav" aria-label="Головне меню">
       <ul class="nav__links">
+        <li><a href="#top" class="is-active">Головна</a></li>
         <li><a href="#rooms">Прайс-лист</a></li>
         <li><a href="#" data-soon="Ресторан">Ресторан</a></li>
         <li><a href="#reviews">Відгуки</a></li>
@@ -87,10 +88,6 @@
         <li><a href="#contacts">Контакти</a></li>
       </ul>
       <div class="header__actions">
-        <div class="season season--compact" role="group" aria-label="Сезон">
-          <button type="button" data-season-btn="winter" aria-pressed="true" aria-label="Зимова версія" title="Зима"><svg><use href="#i-snow"/></svg><span>Зима</span></button>
-          <button type="button" data-season-btn="summer" aria-pressed="false" aria-label="Літня версія" title="Літо"><svg><use href="#i-sun"/></svg><span>Літо</span></button>
-        </div>
         <a href="#booking" class="btn btn--sm">Забронювати</a>
         <button class="icon-btn burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="mmenu"><span></span></button>
       </div>
@@ -148,6 +145,12 @@
           <span class="rating__body"><span class="rating__src">Google</span><span class="rating__txt"><span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span> 819 відгуків</span></span>
         </a>
       </div>
+    </div>
+  </div>
+  <div class="hero__season wrap">
+    <div class="season" role="group" aria-label="Сезон">
+      <button type="button" data-season-btn="winter" aria-pressed="true"><svg><use href="#i-snow"/></svg><span>Зима</span></button>
+      <button type="button" data-season-btn="summer" aria-pressed="false"><svg><use href="#i-sun"/></svg><span>Літо</span></button>
     </div>
   </div>
   <div class="hero__scroll" aria-hidden="true">Гортайте<i></i></div>
