@@ -10,7 +10,7 @@ index.html            головна сторінка (зимова версія
 css/styles.css        стилі
 js/main.js            анімації, сніг, мапа, галерея, відгуки, бронювання
 assets/img/           фото (WebP)
-assets/fonts/         шрифти Montserrat (заголовки, як у логотипі), Cormorant Garamond Italic (курсивні акценти), Manrope (текст) — OFL
+assets/fonts/         шрифти Montserrat (заголовки, як у логотипі), Playfair Display Italic (курсивні акценти), Manrope (текст) — OFL
 assets/logo/          логотип (SVG) + генератор make_logo.py
 tools/                службові скрипти: оригінальні фото, фото локацій для мапи,
                       силуети гір (tools/mountains → ridges.py → build_ridges.py)

@@ -128,7 +128,7 @@ body.menu-open .burger span::after{transform:translateY(-6px) rotate(-45deg)}
 /* Mobile menu */
 .mmenu{position:fixed;inset:0;z-index:55;background:var(--night);color:var(--snow);display:flex;flex-direction:column;padding:calc(var(--header-h) + 24px) var(--gutter) 32px;clip-path:inset(0 0 100% 0);transition:clip-path .8s var(--ease-out);overflow-y:auto}
 body.menu-open .mmenu{clip-path:inset(0 0 0 0)}
-.mmenu__links{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.mmenu__links{list-style:none;margin:0;padding:0;display:grid;gap:clamp(10px,1.9vh,18px)}
 .mmenu__links a{display:flex;align-items:baseline;gap:14px;font-family:var(--serif);font-weight:600;letter-spacing:-.035em;font-size:clamp(28px,7vw,40px);line-height:1.25;opacity:0;transform:translateY(24px);transition:opacity .6s,transform .8s var(--ease-out)}
 .mmenu__links a small{font-family:var(--sans);font-size:11px;letter-spacing:.14em;opacity:.45;min-width:22px}
 body.menu-open .mmenu__links a{opacity:1;transform:none}
