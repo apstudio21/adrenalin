@@ -13,28 +13,28 @@
   const ROOMS = {
     standart: {
       title: 'Стандарт', form: 'Стандарт', price: 7300, extra: 3250,
-      img: 'assets/img/room-standart.webp',
+      photos: ['assets/img/r-standart-1.webp', 'assets/img/r-standart-2.webp', 'assets/img/r-standart-3.webp', 'assets/img/r-standart-4.webp'],
       desc: 'Комфортний номер для спокійного відпочинку',
       spec: [['Площа', '22 м²'], ['Кімнат', '1'], ['Ліжка', '3 односпальні ліжка або 1 двоспальне ліжко + диван'], ['Розміщення', '1+1+1; 2+1']],
       equip: ['TFT LED 32 – телевізор', 'холодильник', 'персональний сейф', 'шафа', 'ванна кімната з душовою кабіною', 'рушники, капці, індивідуальні мийні засоби', 'фен', 'безкоштовний Wi Fi']
     },
     pivluks1: {
       title: 'Півлюкс з одним великим ліжком', form: 'Напівлюкс (1 велике ліжко)', price: 8200, extra: 3250,
-      img: 'assets/img/room-pivluks-1.webp',
+      photos: ['assets/img/r-pivluks1-1.webp', 'assets/img/r-pivluks1-2.webp', 'assets/img/r-pivluks1-3.webp', 'assets/img/r-pivluks1-4.webp', 'assets/img/r-pivluks1-5.webp'],
       desc: 'Просторий номер із великим ліжком',
       spec: [['Площа', '24 м²'], ['Кімнат', '1'], ['Ліжка', '1 двоспальне ліжко + диван'], ['Розміщення', '2+1; 2+2; 1+1']],
       equip: ['TFT LED 32 – телевізор', 'холодильник', 'персональний сейф', 'шафа', 'ванна кімната з душовою кабіною', 'рушники, капці, індивідуальні мийні засоби', 'фен', 'безкоштовний Wi Fi']
     },
     pivluks2: {
       title: 'Півлюкс з двома окремими ліжками', form: 'Напівлюкс (2 окремих ліжка)', price: 7800, extra: 3250,
-      img: 'assets/img/room-pivluks-2.webp',
+      photos: ['assets/img/r-pivluks2-1.webp', 'assets/img/r-pivluks2-2.webp', 'assets/img/r-pivluks2-3.webp', 'assets/img/r-pivluks2-4.webp'],
       desc: 'Зручний номер із двома окремими ліжками',
       spec: [['Площа', '24 м²'], ['Кімнат', '1'], ['Ліжка', '2 односпальні ліжка + тахта'], ['Розміщення', '2+1; 1+1']],
       equip: ['TFT LED 32 – телевізор', 'холодильник', 'персональний сейф', 'шафа', 'ванна кімната з душовою кабіною', 'рушники, капці, індивідуальні мийні засоби', 'фен', 'безкоштовний Wi Fi']
     },
     luks: {
       title: 'Люкс', form: 'Люкс', price: 9000, extra: 3650,
-      img: 'assets/img/room-luks-wide.webp',
+      photos: ['assets/img/r-luks-1.webp', 'assets/img/r-luks-2.webp', 'assets/img/r-luks-3.webp', 'assets/img/r-luks-4.webp', 'assets/img/r-luks-5.webp', 'assets/img/r-luks-6.webp'],
       desc: 'Преміальний простір для максимального комфорту',
       spec: [['Площа', '42 м²'], ['Кімнат', '1 + передпокій'], ['Ліжка', '1 двоспальне ліжко + диван + диван на лоджії'], ['Розміщення', '2+2+1']],
       equip: ['TFT LED 32 – телевізор', 'холодильник', 'персональний сейф', 'шафа', 'ванна кімната з душовою кабіною', 'халати, рушники, капці, індивідуальні мийні засоби', 'фен', '«набір гостинності» (для приготування чаю та кави)', 'безкоштовний Wi Fi']
@@ -277,16 +277,48 @@
   }
 
   /* ------------------------------------------------------------------
+     Photo slider (room cards + room drawer)
+  ------------------------------------------------------------------ */
+  const makeSlider = (host, photos, alt, { onPick, counter = false, eager = false } = {}) => {
+    host.querySelectorAll('.sl, :scope > img').forEach(n => n.remove());
+    const sl = document.createElement('div'); sl.className = 'sl';
+    sl.innerHTML = `<div class="sl__track">${photos.map((src, i) =>
+        `<img src="${src}" alt="${alt}, фото ${i + 1}" ${eager && i === 0 ? '' : 'loading="lazy"'} draggable="false">`).join('')}</div>
+      <button class="sl__btn sl__prev" type="button" aria-label="Попереднє фото"><svg><use href="#i-left"/></svg></button>
+      <button class="sl__btn sl__next" type="button" aria-label="Наступне фото"><svg><use href="#i-arrow"/></svg></button>
+      <div class="sl__dots">${photos.map(() => '<i></i>').join('')}</div>
+      ${counter ? '<span class="sl__count"></span>' : ''}`;
+    host.prepend(sl);
+    const track = $('.sl__track', sl), dots = $$('.sl__dots i', sl), cnt = $('.sl__count', sl);
+    const prev = $('.sl__prev', sl), next = $('.sl__next', sl);
+    const idx = () => Math.round(track.scrollLeft / (track.clientWidth || 1));
+    const go = (i, smooth = true) => track.scrollTo({ left: Math.max(0, Math.min(photos.length - 1, i)) * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    const sync = () => {
+      const i = idx();
+      dots.forEach((d, k) => d.classList.toggle('is-on', k === i));
+      prev.disabled = i <= 0; next.disabled = i >= photos.length - 1;
+      if (cnt) cnt.textContent = `${i + 1} / ${photos.length}`;
+    };
+    prev.addEventListener('click', e => { e.stopPropagation(); go(idx() - 1); });
+    next.addEventListener('click', e => { e.stopPropagation(); go(idx() + 1); });
+    track.addEventListener('scroll', () => requestAnimationFrame(sync), { passive: true });
+    if (onPick) track.addEventListener('click', () => onPick(idx()));
+    sync();
+    return { go };
+  };
+
+  /* ------------------------------------------------------------------
      Room drawer
   ------------------------------------------------------------------ */
   const drawer = $('#drawer');
   let drawerRoom = null, lastFocus = null;
   const money = n => n.toLocaleString('uk-UA').replace(/ /g, ' ');
-  const openDrawer = key => {
+  const drawerGal = $('[data-drawer-gallery]', drawer);
+  const openDrawer = (key, start = 0) => {
     const r = ROOMS[key]; if (!r) return;
     drawerRoom = key; lastFocus = document.activeElement;
-    $('.drawer__img img', drawer).src = r.img;
-    $('.drawer__img img', drawer).alt = r.title;
+    const ds = makeSlider(drawerGal, r.photos, r.title, { counter: true, eager: true });
+    requestAnimationFrame(() => ds.go(start, false));
     $('#drawerTitle').textContent = r.title;
     $('[data-d-desc]', drawer).textContent = r.desc;
     $('[data-d-spec]', drawer).innerHTML = r.spec.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
@@ -303,6 +335,10 @@
     lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
   };
   $$('[data-room-open]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); openDrawer(a.dataset.roomOpen); }));
+  $$('[data-gallery]').forEach(m => {
+    const key = m.dataset.gallery, r = ROOMS[key];
+    if (r) makeSlider(m, r.photos, r.title, { onPick: i => openDrawer(key, i) });
+  });
   $$('[data-drawer-close]', drawer).forEach(b => b.addEventListener('click', closeDrawer));
   $('[data-d-book]', drawer).addEventListener('click', () => { closeDrawer(); pickRoom(drawerRoom); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer(); });

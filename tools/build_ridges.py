@@ -33,11 +33,11 @@ blocks = [
   # banner → Dragobrat
   ridge('ridge--bottom', 230, [('rg-m3r', 0, S, .45), ('rg-m2', 42, S, 1)]),
   # gallery → reviews (dark)
-  ridge('ridge--top', 200, [('rs-m3r', 46, P, .4), ('rs-m4r', 0, P, 1)]),
+  ridge('ridge--top', 170, [('rs-m4r', 0, P, 1)]),
   # reviews (dark) → booking: paper mountains rise into the night
-  ridge('ridge--top', 200, [('rs-m2r', 0, N, .45), ('rs-m3', 52, N, 1)]),
+  ridge('ridge--top', 150, [('rs-m3', 0, N, 1)]),
   # booking → footer
-  ridge('ridge--top', 360, [('rs-m4', 150, P, .35), ('rs-m1', 0, P, 1)], 70),
+  ridge('ridge--top', 200, [('rs-m2', 0, P, 1)], 50),
 ]
 
 s = open('index.html').read()
