@@ -1,7 +1,7 @@
 """Builds the Adrenalin wordmark as pure SVG paths (no font dependency).
 Letters: Montserrat Italic (heavy), with the Latin single-storey 'g' standing in
-for 'д' to match the cursive д on the hotel's street sign. A tapered swoosh from
-the neon sign runs above the word and rises like a mountain slope."""
+for 'д' to match the cursive д on the hotel's street sign. The line is the neon
+tube from the indoor sign: it passes behind the letters and ends on the dot of «і»."""
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 from fontTools.pens.svgPathPen import SVGPathPen
@@ -32,39 +32,24 @@ def build(color_word, color_line, bg=None, with_line=True, pad=40):
         d, adv = glyph_path(ch, x)
         paths.append(d); x += adv + TRACK; prev = ch
     width = x
-    asc = 760; desc = 230                      # visible extents in font units
-    top_extra = 380 if with_line else 0        # room for the swoosh
-    vb_x, vb_y = -pad - 60, -asc - top_extra - pad
-    vb_w, vb_h = width + 2 * pad + 120, asc + desc + top_extra + 2 * pad
     body = "".join(f'<path d="{d}"/>' for d in paths)
-    swoosh = ""
+    # The neon line from the hotel's sign: it comes in from the upper left,
+    # dives behind the «А», runs hidden behind the letters, re-emerges from the
+    # top of «а», arcs over «л» and lands on the dot of «і».
+    SW = 58                                   # tube thickness, font units
+    seg1 = "M -340 -620 C -180 -585, 80 -525, 300 -470"
+    seg2 = "M 3700 -470 C 3960 -930, 4680 -1060, 5185 -765"
+    line = ""
     if with_line:
-        # Tapered ribbon: thin at the left behind 'А', thickens over the word,
-        # climbs to a peak above 'л-і' and drops off — a ski-slope / ridge line.
-        import math
-        y0 = -asc + 40                      # cap-top level of the letters
-        x_start, x_end = -70, width + 30
-        peak_x, peak_h, peak_w = width * 0.80, 300, width * 0.13
-        tmax = 66
-        def cy(x):                          # centre line: gentle rise + a ridge peak
-            t = (x - x_start) / (x_end - x_start)
-            base = y0 - 70 * t
-            ridge = peak_h * math.exp(-((x - peak_x) / peak_w) ** 2)
-            tail = 120 * max(0, (x - peak_x) / (x_end - peak_x)) ** 1.6  # drop after peak
-            return base - ridge + tail
-        def th(x):
-            t = (x - x_start) / (x_end - x_start)
-            return tmax * (math.sin(math.pi * t) ** 0.9) * (0.35 + 0.65 * t)
-        n = 160
-        xs = [x_start + (x_end - x_start) * i / n for i in range(n + 1)]
-        upper = [(x, cy(x) - th(x) / 2) for x in xs]
-        lower = [(x, cy(x) + th(x) / 2) for x in reversed(xs)]
-        pts = upper + lower
-        d = "M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in pts) + " Z"
-        swoosh = f'<path fill="{color_line}" d="{d}"/>'
-    bgrect = f'<rect x="{vb_x}" y="{vb_y}" width="{vb_w}" height="{vb_h}" fill="{bg}"/>' if bg else ""
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb_x:.0f} {vb_y:.0f} {vb_w:.0f} {vb_h:.0f}" '
-            f'role="img" aria-label="Адреналін">{bgrect}{swoosh}<g fill="{color_word}">{body}</g></svg>')
+        line = (f'<g fill="none" stroke="{color_line}" stroke-width="{SW}" stroke-linecap="round">'
+                f'<path d="{seg1}"/><path d="{seg2}"/></g>')
+    x0 = -380 if with_line else -80
+    y0 = -990 if with_line else -840
+    x1, y1 = width + 60, 240
+    vb = (x0 - pad, y0 - pad, x1 - x0 + 2 * pad, y1 - y0 + 2 * pad)
+    bgrect = f'<rect x="{vb[0]}" y="{vb[1]}" width="{vb[2]}" height="{vb[3]}" fill="{bg}"/>' if bg else ""
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb[0]:.0f} {vb[1]:.0f} {vb[2]:.0f} {vb[3]:.0f}" '
+            f'role="img" aria-label="Адреналін">{bgrect}{line}<g fill="{color_word}">{body}</g></svg>')
 
 if __name__ == "__main__":
     out = sys.argv[1] if len(sys.argv) > 1 else "."

@@ -52,15 +52,16 @@
     { n: 'Констянтин', d: '23.02.2025', t: 'Готель сподобався всім. Номер теплий, чистий з гарним краєвидом. Завжди гаряча вода. Сервіс на рівні. Окреме спасибі хлопцям офіціантом, відзначу поштивість, ненастирливість і при цьому тонке розуміння дитячої поведінки. Кухарю окреме дякую' }
   ];
 
+  // Фото: Вікісховище (Wikimedia Commons), вільні ліцензії — автор вказаний у підписі
   const PINS = {
-    hotel: { t: 'Готель «Адреналін»', m: ['1700 м', 'поруч із підйомниками'], p: 'Найновіший та наймасштабніший заклад Драгобрату. Звідси кілька хвилин до схилів, а з вікон номерів видно Говерлу та гору Стіг.', img: 'assets/img/hero-night.webp', i: 'i-hotel' },
-    stih: { t: 'Гора Стіг', m: ['Свидовецький хребет'], p: 'Біля самого підніжжя гори Стіг серед густих хвойних лісів розташований курорт Драгобрат. Звідси відкриваються краєвиди на Говерлу та Петрос.', i: 'i-mountain' },
-    runs: { t: 'Траси та підйомники', m: ['9:00–18:00', '13 трас'], p: '5 трас для новачків, 5 червоних, 2 чорні та траса для фрірайду. 2 бугельні підйомники, бейбіліфт і мультиліфт; діє система абонементів. Лижна школа навчить навіть діток від 3 років.', i: 'i-lift' },
-    zhandarmy: { t: 'Жандарми', m: ['скелі', 'піший маршрут'], p: 'Скелясті вершини зовсім поруч із курортом — популярна мета прогулянок із неймовірними краєвидами на Карпати.', i: 'i-rock' },
-    blyznytsia: { t: 'Близниця', m: ['найвища точка Свидовця'], p: 'Найвища вершина Свидовецького хребта, розташована зовсім поруч із Драгобратом. Звідси видно Чорногору з Говерлою.', i: 'i-flag' },
-    lake: { t: 'Озеро Герешаска', m: ['льодовикове озеро'], p: 'Високогірне озеро на схилах гори Догяска, над Драгобратським водоспадом. Вода навіть улітку прогрівається не більше ніж до +11 °C.', i: 'i-lake' },
-    waterfall: { t: 'Драгобратський водоспад', m: ['7 м', '≈ 2–2,5 год пішки'], p: 'Пам’ятка природи на річці Косівська. Найефектніший навесні під час танення снігу або влітку після дощів.', i: 'i-water' },
-    hoverla: { t: 'Говерла', m: ['2061 м', 'вид з номерів'], p: 'Найвища вершина Українських Карпат. З вікон частини номерів готелю відкривається вид саме на неї.', i: 'i-mountain' }
+    hotel: { t: 'Готель «Адреналін»', m: ['1700 м', 'поруч із підйомниками'], p: 'Найновіший та наймасштабніший заклад Драгобрату. Звідси кілька хвилин до схилів, а з вікон номерів видно Говерлу та гору Стіг.', img: 'assets/img/hero-night.webp' },
+    blyznytsia: { t: 'Велика Близниця', m: ['1881 м', 'найвища точка Свидовця'], p: 'Найвища вершина Свидовецького хребта зовсім поруч із Драгобратом. З вершини видно Чорногору з Говерлою, а до неї веде дорога від курорту.', img: 'assets/img/loc-blyznytsia.webp', c: 'Тарас Лесів, CC BY-SA 4.0' },
+    zhandarm: { t: 'Жандарм', m: ['1763 м', 'скелі'], p: 'Скеляста вершина над курортом — популярна мета прогулянок. Звідси відкривається один із найкращих краєвидів на Драгобрат.', img: 'assets/img/loc-zhandarm.webp', c: 'Misha Reme, CC BY-SA 4.0' },
+    peremychka: { t: 'Перемичка', m: ['1560 м', 'перевал'], p: 'Сідловина між Жандармом і Стогом, де сходяться підйомники та траси. Звідси починається дорога на Близницю та Жандарми.', img: 'assets/img/loc-peremychka.webp', c: 'Тарас Лесів, CC BY-SA 4.0' },
+    stih: { t: 'Гора Стіг', m: ['1704 м', 'Свидовецький хребет'], p: 'Біля самого підніжжя гори Стіг серед густих хвойних лісів розташований курорт Драгобрат. На її схилах — найдовші траси курорту.', img: 'assets/img/loc-stih.webp', c: 'ЯдвигаВереск, CC BY-SA 4.0' },
+    ivor: { t: 'Озеро Івор', m: ['1600 м', 'льодовикове озеро'], p: 'Високогірне озеро біля підніжжя Близниці та Жандармів. Влітку — одна з найкрасивіших точок пішого маршруту від готелю.', img: 'assets/img/loc-ivor.webp', c: 'Billchik, CC BY-SA 4.0' },
+    hereshaska: { t: 'Озеро Герешаска', m: ['1577 м', '≈ 2–2,5 год пішки'], p: 'Льодовикове озеро на схилах гори Догяска, над Драгобратським водоспадом. Вода навіть улітку прогрівається не більше ніж до +11 °C.', img: 'assets/img/loc-hereshaska.webp', c: 'Mariia Nasypana, CC BY-SA 4.0' },
+    runs: { t: 'Траси та підйомники', m: ['9:00–18:00', 'абонементи'], p: '5 трас для новачків, 5 червоних, 2 чорні та траса для фрірайду. Підйомники працюють щодня, діє система абонементів, а лижна школа навчить навіть діток від 3 років.', img: 'assets/img/loc-runs.webp', c: 'Тарас Лесів, CC BY-SA 4.0' }
   };
 
   /* ------------------------------------------------------------------
@@ -140,11 +141,11 @@
   /* ------------------------------------------------------------------
      Snow
   ------------------------------------------------------------------ */
-  const snowBtn = $('.snow-toggle');
   const canvas = $('#snow');
   const ctx = canvas.getContext('2d');
-  let flakes = [], W = 0, H = 0, dpr = 1, snowOn = true, raf;
-  try { if (localStorage.getItem('adr-snow') === 'off') snowOn = false; } catch (e) {}
+  let flakes = [], W = 0, H = 0, dpr = 1, raf;
+  // сніг іде лише в зимовій версії сайту
+  const snowOn = () => document.documentElement.dataset.season === 'winter';
   const mkFlake = (init) => {
     const z = Math.random();                 // depth 0..1
     return { x: Math.random() * W, y: init ? Math.random() * H : -10, z,
@@ -177,17 +178,8 @@
     }
     raf = requestAnimationFrame(tick);
   };
-  const startSnow = () => { cancelAnimationFrame(raf); if (snowOn && !reduce) tick(); else ctx.clearRect(0, 0, W, H); };
-  const applySnow = () => {
-    document.body.classList.toggle('no-snow', !snowOn);
-    snowBtn.setAttribute('aria-pressed', snowOn);
-    startSnow();
-  };
-  snowBtn.addEventListener('click', () => {
-    snowOn = !snowOn;
-    try { localStorage.setItem('adr-snow', snowOn ? 'on' : 'off'); } catch (e) {}
-    applySnow();
-  });
+  const startSnow = () => { cancelAnimationFrame(raf); if (snowOn() && !reduce) tick(); else ctx.clearRect(0, 0, W, H); };
+  const applySnow = () => { document.body.classList.toggle('no-snow', !snowOn()); startSnow(); };
   sizeSnow(); applySnow();
   let rT; addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { sizeSnow(); }, 200); });
   document.addEventListener('visibilitychange', () => { if (document.hidden) cancelAnimationFrame(raf); else startSnow(); });
@@ -449,7 +441,7 @@
       $('h4', pop).textContent = d.t;
       $('p', pop).textContent = d.p;
       $('.pop__meta', pop).innerHTML = d.m.map(x => `<span>${x}</span>`).join('');
-      $('.pop__media', pop).innerHTML = d.img ? `<img src="${d.img}" alt="">` : `<svg class="big"><use href="#${d.i}"/></svg>`;
+      $('.pop__media', pop).innerHTML = `<img src="${d.img}" alt="${d.t}">` + (d.c ? `<small class="pop__credit">Фото: ${d.c} · Вікісховище</small>` : '');
       // position near the pin (desktop); on mobile CSS turns it into a bottom sheet
       const mr = map.getBoundingClientRect(), pr = pin.getBoundingClientRect();
       let left = pr.left - mr.left + pr.width / 2 + 24;
